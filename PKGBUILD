@@ -14,12 +14,15 @@ replaces=("$pkgname")
 install="${pkgname}.install"
 source=("http://http.debian.net/debian/pool/main/l/lwipv6/lwipv6_1.5a.orig.tar.gz"
         "${pkgname}.install"
-        "http://ftp.us.debian.org/debian/pool/main/l/lwipv6/liblwipv6-2_1.5a-2_amd64.deb")
+        "http://ftp.us.debian.org/debian/pool/main/l/lwipv6/liblwipv6-2_1.5a-2_amd64.deb"
+        "https://raw.githubusercontent.com/testudo-defense/liblwipv6/compiling-for-me/sockets_fix.diff")
 md5sums=("82258b72a5e0abbfd17920a8d7fa1906"
          "b4165e6142a92d65c8e14479486decc4"
-         "256c6a739c765988eafdd347f174635d")
+         "256c6a739c765988eafdd347f174635d"
+         "cdc9c7f8d5c0a82a5015f5401205ff94")
 
 build(){
+   patch -p0 < sockets_fix.diff
    cd "$srcdir/lwipv6-${pkgver}"
    autoreconf -i
    if [ "$CARCH" == "x86_64" ]; then
