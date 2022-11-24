@@ -1,0 +1,19 @@
+--- ./lwipv6-1.5a/lwip-v6/src/api/sockets.c	2022-11-19 21:50:20.798348333 -0500
++++ ./lwipv6-1.5a/lwip-v6/src/api/sockets.c	2022-11-19 21:50:39.768348290 -0500
+@@ -2092,6 +2092,7 @@
+ 			sock_set_errno(sock, 0);
+ 			return 0;
+ 
++#ifdef SIOCGSTAMP
+ 		case SIOCGSTAMP:
+ 			{
+ 				struct timezone tz;
+@@ -2100,6 +2101,8 @@
+ 				memcpy(argp,&tv,sizeof(struct timeval));  
+ 			}
+ 			return 0;
++#endif
++
+ 		default:
+ 			stack=netconn_stack(sock->conn);
+ #if LWIP_CAPABILITIES
